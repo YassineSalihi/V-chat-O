@@ -1,7 +1,10 @@
 # chat0 -- P2P End-to-End Encrypted Chat
 
 > Serverless | End-to-end encrypted | Onion-routed | Sybil-resistant
-> Author: Yassine Salihi -- <y.salihi7457@uca.ac.ma>
+> Author: Yassine Salihi
+> Author: Wissal Mokdad
+> Author: Hafsa Azarg
+> Author: Rania Elhezzam
 
 A fully decentralised instant messaging desktop app built with **Wails v2**
 (Go 1.23 backend + TypeScript/Vite frontend). No central server, no accounts,
@@ -270,7 +273,7 @@ the button. The peer appears in the sidebar within a second.
 Find your IP address:
 
 ```bash
-hostname -I | awk '{print $1}'    # Linux
+ip a # TODO : SEARCH A BETTER ONE    # Linux
 ipconfig getifaddr en0            # macOS
 ipconfig                          # Windows (look for IPv4 Address)
 ```
