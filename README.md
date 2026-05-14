@@ -1,7 +1,7 @@
 # chat0 -- P2P End-to-End Encrypted Chat
 
 > Serverless | End-to-end encrypted | Onion-routed | Sybil-resistant
-> Author: Yassine Salihi
+> Author: Yassine Salihi </br>
 > Author: Wissal Mokdad
 > Author: Hafsa Azarg
 > Author: Rania Elhezzam
