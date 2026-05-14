@@ -2,9 +2,9 @@
 
 > Serverless | End-to-end encrypted | Onion-routed | Sybil-resistant
 > Author: Yassine Salihi </br>
-> Author: Wissal Mokdad
-> Author: Hafsa Azarg
-> Author: Rania Elhezzam
+> Author: Wissal Mokdad </br>
+> Author: Hafsa Azarg </br>
+> Author: Rania Elhezzam </br>
 
 A fully decentralised instant messaging desktop app built with **Wails v2**
 (Go 1.23 backend + TypeScript/Vite frontend). No central server, no accounts,
