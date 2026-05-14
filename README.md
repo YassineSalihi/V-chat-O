@@ -1,6 +1,6 @@
 # chat0 -- P2P End-to-End Encrypted Chat
 
-> Serverless | End-to-end encrypted | Onion-routed | Sybil-resistant
+> Serverless | End-to-end encrypted | Onion-routed | Sybil-resistant </br>
 > Author: Yassine Salihi </br>
 > Author: Wissal Mokdad </br>
 > Author: Hafsa Azarg </br>
