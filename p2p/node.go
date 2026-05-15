@@ -444,11 +444,13 @@ func (n *Node) handleMessage(peer *Peer, msg WireMessage) {
 			_, known := n.peers[info.ID]
 			n.mu.RUnlock()
 			if !known {
-				go func(addr string) {
+				// REPLACE WITH:
+				go func(knownAddr, advertisedAddr string) {
+					addr := resolveGossipAddr(knownAddr, advertisedAddr)
 					if err := n.Connect(addr); err != nil {
 						log.Printf("[p2p] gossip-connect to %s: %v", addr, err)
 					}
-				}(info.Addr)
+				}(peer.info.Addr, info.Addr)
 			}
 		}
 
@@ -467,7 +469,7 @@ func (n *Node) handleMessage(peer *Peer, msg WireMessage) {
 
 func (n *Node) maintenanceLoop() {
 	ticker := time.NewTicker(30 * time.Second)
-	gossipTicker := time.NewTicker(60 * time.Second)
+	gossipTicker := time.NewTicker(10 * time.Second)
 	defer ticker.Stop()
 	defer gossipTicker.Stop()
 
@@ -584,4 +586,19 @@ func readFrame(conn net.Conn) ([]byte, error) {
 		return nil, err
 	}
 	return data, nil
+}
+
+// resolveGossipAddr builds a dialable address from a known connection's host
+// and the port from a gossip-advertised address.
+// e.g. knownAddr="192.168.1.5:9001", advertisedAddr=":9002" -> "192.168.1.5:9002"
+func resolveGossipAddr(knownAddr, advertisedAddr string) string {
+	host, _, err := net.SplitHostPort(knownAddr)
+	if err != nil || host == "" {
+		host = "127.0.0.1"
+	}
+	_, port, err := net.SplitHostPort(advertisedAddr)
+	if err != nil {
+		return advertisedAddr
+	}
+	return net.JoinHostPort(host, port)
 }

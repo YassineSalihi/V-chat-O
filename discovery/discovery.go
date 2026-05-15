@@ -331,3 +331,11 @@ func clamp(v, lo, hi int) int {
 	}
 	return v
 }
+
+// GetEntry returns the raw mutable entry — use for testing/inspection only.
+func (pt *PeerTable) GetEntry(id string) (*PeerEntry, bool) {
+	pt.mu.Lock()
+	defer pt.mu.Unlock()
+	e, ok := pt.entries[id]
+	return e, ok
+}

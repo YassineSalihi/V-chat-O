@@ -98,17 +98,19 @@ func (a *App) startup(ctx context.Context) {
 
 	a.collector = metrics.NewCollector()
 
-	a.listenAddr = ":9000"
-	a.node = p2p.NewNode(a.listenAddr, a.identity, a.dhKeyPair, a.collector)
-	a.node.SetHandlers(a.onMessage, a.onPeerJoin, a.onPeerLeave)
-
-	if err := a.node.Start(); err != nil {
-		a.listenAddr = ":0"
+// REPLACE WITH:
+	started := false
+	for port := 9000; port < 9010; port++ {
+		a.listenAddr = fmt.Sprintf(":%d", port)
 		a.node = p2p.NewNode(a.listenAddr, a.identity, a.dhKeyPair, a.collector)
 		a.node.SetHandlers(a.onMessage, a.onPeerJoin, a.onPeerLeave)
-		if err2 := a.node.Start(); err2 != nil {
-			log.Printf("p2p start: %v", err2)
+		if err := a.node.Start(); err == nil {
+			started = true
+			break
 		}
+	}
+	if !started {
+		log.Fatalf("p2p: could not bind any port in range 9000-9009")
 	}
 
 	a.peerTable = discovery.NewPeerTable()
